@@ -20,14 +20,14 @@ const chatMessages = []
 function colorSelectedEmojis() {
   for (const element of emojiElements) {
     // Recupero l'emoji di ogni elemento
-    const emoji = element.innerText
+    const emoji = element.dataset.icon;
 
-    // Se l'emoji è nella lista delle selezionate...
+    // Se l'emoji è nella lista delle selezionate (perché al click viene aggiunta nell'array-vedi giu)
     if (selectedEmojis.includes(emoji)) {
       // Aggiungi la classe selected
       element.classList.add('selected')
     } else {
-      // Rimuovi (se c'è la clase selected)
+      // Rimuovi (se c'è la classe selected)
       element.classList.remove('selected')
     }
   }
@@ -41,6 +41,7 @@ const endpoint = 'https://v2.jokeapi.dev/joke/Any'
 async function createStory(prompt) {
   // Lo aggiungo alla lista dei messaggi
   chatMessages.push(prompt)
+  console.log(chatMessages)
 
   // Mostro la schermata di caricamento
   mainSection.className = 'loading'
@@ -48,21 +49,42 @@ async function createStory(prompt) {
   // || SIAMO PRONTI A CHIAMARE l'api!!!!
 
   // Chiamata
-  const response = await fetch(`https://v2.jokeapi.dev/joke/Any?contains=${prompt? prompt:""}`);
+  const response = await fetch(`https://v2.jokeapi.dev/joke/${prompt.category && prompt.category.length > 0 ? 
+    prompt.category.join(",") : 
+    "any"}?contains=${prompt.word ? prompt.word : ""}`);
+
 
   // Elaboriamo la risposta
   const data = await response.json();
   console.log(data)
 
   // Recuperiamo la storia
-  const storyQ = data.setup;
-  const storyAnsw = data.delivery;
+  let storyQ = "";
+  let storyAnsw = "";
+  if(data.joke) {
+    storyQ = data.joke;
+    // storyAnsw = data.delivery;
+    
+  }else {
+    storyQ = data.setup;
+    storyAnsw = data.delivery;
+
+  }
   console.log(storyQ)
   console.log(storyAnsw )
 
-  // // Inseriamo la storia all'interno della pagina
-  storyTitle.innerText = storyQ
-  storyText.innerText = storyAnsw
+  if(!data.error) {
+    // // Inseriamo la storia all'interno della pagina
+    storyTitle.innerText = storyQ
+    storyText.innerText = storyAnsw
+  }else {
+    storyTitle.innerText = "Parola non trovata";
+    storyText.innerText = "prova con un'altra parola"
+
+    setTimeout(() => {
+      window.location.href="./";
+    }, 4000)
+  }
 
   // // Mostra la schermata result
   mainSection.className = 'result'
@@ -71,10 +93,10 @@ async function createStory(prompt) {
 // # Fase di gestione eventi
 // Per ogni elemento degli elementi emoji...
 for (const element of emojiElements) {
-  // Stai attento se qualcuno clicca l'elemento
+  
   element.addEventListener('click', function () {
     // Recupera l'emoji
-    const clickedEmoji = element.innerText
+    const clickedEmoji = element.dataset.icon;
 
     // ! Controllo se c'è già, non fare niente
     if (selectedEmojis.includes(clickedEmoji)) {
@@ -104,8 +126,10 @@ for (const element of emojiElements) {
 generateButton.addEventListener('click', async function () {
 
   // Preparo il messaggio iniziale con la parola presa dal campo
-  const prompt = nameField.value
-
+  const prompt = {
+    word: nameField.value,
+    category: selectedEmojis
+  }
 
   // Controlle se manca qualcosa
   // if (selectedEmojis.length < 3 || name.length < 2) {
@@ -121,10 +145,10 @@ generateButton.addEventListener('click', async function () {
 
 // Al click sul bottone avanti
 continueButton.addEventListener('click', function () {
-  // Prepariamo un nuovo prompt
+  // Prepariamo un nuovo prompt casuale
   const prompt = {
-    role: 'user',
-    content: 'Continua la storia da qui. Scrivi un breve paragrafo che prosegua la storia precedente. Le tue risposte sono solo in formato JSON con lo stesso formato delle tue risposte precedenti. Mantieni lo stesso valore per "title". Cambia solo il valore di "text"'
+    word: chatMessages[0].word,
+    category: chatMessages[0].category
   }
 
   // Crea storia

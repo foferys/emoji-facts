@@ -1,19 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Orelega+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+.orelega-one-regular {
+	font-family: "Orelega One", serif;
+	font-weight: 400;
+	font-style: normal;
+}
+  
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	color: #6f1b36;
-	font-family: 'Instrument Sans', sans-serif;
+	color: #ffffff;
+	font-family: "Orelega One", serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 /* Regole Generiche */
 
-body {
-	background-color: #f1d0e5;
+#home {
+	background-color: white;
+	border: none;
 }
 
 header {
-	background-color: #faeff6;
+	background-color: #ffc107;
 	margin-bottom: 32px;
 	padding: 8px 16px;
 	border-radius: 16px;
@@ -21,6 +34,11 @@ header {
 	justify-content: center;
 	align-items: center;
 	gap: 8px;
+}
+
+header h1{
+	font-family: 'Instrument Sans', sans-serif;
+
 }
 
 h1 {
@@ -36,13 +54,14 @@ img {
 
 button {
 	width: 100%;
-	font-size: 32px;
-	font-weight: 500;
-	padding: 8px 16px;
-	background-color: #f87cd1;
-	border: 2px solid #f87cd1;
-	border-radius: 8px;
-	cursor: pointer;
+    font-size: 25px;
+    font-weight: 900;
+    padding: 8px 16px;
+    background-color: #ffc107;
+    border: 2px solid #ffc107;
+    border-radius: 15px;
+    cursor: pointer;
+	font-family: 'Instrument Sans', sans-serif;
 }
 
 .secondary-button {
@@ -54,6 +73,16 @@ button {
 
 .field {
 	margin-bottom: 32px;
+}
+.field ul{
+	background: #ffffff30;
+    border-radius: 10px;
+}
+.field input {
+	background: white;
+    border-radius: 10px;
+    padding: 10px;
+    color: #9b2046;
 }
 
 label {
@@ -80,9 +109,11 @@ input:focus {
 }
 
 .container {
-	margin: 0 auto;
+	margin: 50px auto;
 	padding: 16px;
 	max-width: 400px;
+	background-color: #ac6b7d;
+	border-radius: 15px;
 }
 
 /* Emojis */
@@ -108,7 +139,7 @@ input:focus {
 
 .selected,
 .emoji:hover {
-	background-color: #fbabdf;
+	background-color: #ffc107;
 }
 
 /* REGOLE DI VISIBILITA' */
