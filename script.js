@@ -143,6 +143,22 @@ generateButton.addEventListener('click', async function () {
   createStory(prompt)
 })
 
+
+const inpParola = document.querySelector("#inpParola");
+inpParola.addEventListener("keydown", (tasto) => {
+
+  const prompt = {
+    word: nameField.value,
+    category: selectedEmojis
+  }
+  
+  if(tasto.key == "Enter") {
+    createStory(prompt);
+  }
+})
+
+
+
 // Al click sul bottone avanti
 continueButton.addEventListener('click', function () {
   // Prepariamo un nuovo prompt casuale
@@ -155,6 +171,7 @@ continueButton.addEventListener('click', function () {
   createStory(prompt)
 
 })
+
 
 // Al click sul bottone home
 homeButton.addEventListener('click', function () {

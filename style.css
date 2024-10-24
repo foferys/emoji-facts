@@ -78,6 +78,12 @@ button {
 	background: #ffffff30;
     border-radius: 10px;
 }
+.field ul li{
+	display: flex; flex-direction: column;
+}
+.field ul li p{
+	font-size: 13px;
+}
 .field input {
 	background: white;
     border-radius: 10px;
